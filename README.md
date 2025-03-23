@@ -40,3 +40,83 @@ npm run build
 ```
 yarn build
 ```
+
+## Архитектура
+
+В проекте используется модель MVP:
+
+- Model. Отвечает за хранение и обработку данных.
+- View. Показывает пользователю интерфейс и данные из model.
+- Presenter. Некая прослойка между model и view, которая ими управляет, а так же, обрабатывает пользовательский ввод.
+
+## Типы данных
+
+### Продукт в каталоге
+
+```ts
+interface IProduct {
+    id: string;
+    title: string;
+    description: string;
+    image: string;
+    price: number | null;
+    category: string;
+}
+```
+
+### Весь каталог
+
+```ts
+interface IProductData {
+    items: IProduct[];
+    preview: string | null;
+    getProduct(productId: string): IProduct;
+    getProducts(): IProduct[];
+}
+```
+
+### Продукт в корзине
+
+```ts
+interface ICart {
+    id: string;
+    title: string;
+    price: number | null;
+    count: number;
+}
+```
+
+### Корзина пользователя
+
+```ts
+interface ICartData {
+    items: IProduct[];
+    addProduct(product: IProduct): void;
+    getProduct(productId: string): IProduct;
+    getTotalPrice(): number | null;
+    deleteProduct(productId: string): void;
+    clearCart(): void;
+}
+```
+
+### Информация о покупателе
+
+```ts
+interface IOrder {
+    paymentType: string;
+    address: string;
+    email: string;
+    phone: string;
+}
+```
+
+### Оформление заказа
+
+```ts
+interface IOrderData {
+    order: IOrder;
+    validatedOrder(): boolean;
+    setOrderField(field: keyof IOrder, value: IOrder[keyof IOrder]): void;
+    clearOrder(): void;
+}
+```
