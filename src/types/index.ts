@@ -11,7 +11,8 @@ export interface IProductData {
     items: IProduct[];
     preview: string | null;
     getProduct(productId: string): IProduct;
-    getProducts(): IProduct[];
+    setProducts(products: IProduct[]): void;
+    setPreview(product: IProduct): void;
 }
 
 export interface ICart {
@@ -42,3 +43,5 @@ export interface IOrderData {
     setOrderField(field: keyof IOrder, value: IOrder[keyof IOrder]): void;
     clearOrder(): void;
 }
+
+export type TFormErrors = Partial<Record<keyof IOrder, string>>;
