@@ -325,6 +325,6 @@ constructor(container: HTMLElement, protected events: EventEmitter)
 - `cart:open` - Открыть корзину.
 - `cart:change` - Изменить корзину.
 - `order:open` - Перейти к покупке.
-- `order:change` - .
+- `order:change` - Изменить данные в форме оформления товара.
 - `order:submitPayments` - Отправить форму оплаты и адреса.
 - `order:submitContacts` - Отправить форму почты и телефона.
