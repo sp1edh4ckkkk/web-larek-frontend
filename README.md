@@ -6,6 +6,8 @@
 - src/ — исходные файлы проекта
 - src/components/ — папка с JS компонентами
 - src/components/base/ — папка с базовым кодом
+- src/components/model/ — папка с моделями
+- src/components/view/ — папка с вьюхами
 
 Важные файлы:
 - src/pages/index.html — HTML-файл главной страницы
@@ -73,7 +75,8 @@ interface IProductData {
     items: IProduct[];
     preview: string | null;
     getProduct(productId: string): IProduct;
-    getProducts(): IProduct[];
+    setProducts(products: IProduct[]): void;
+    setPreview(product: IProduct): void;
 }
 ```
 
@@ -94,7 +97,6 @@ interface ICart {
 interface ICartData {
     items: IProduct[];
     addProduct(product: IProduct): void;
-    getProduct(productId: string): IProduct;
     getTotalPrice(): number | null;
     deleteProduct(productId: string): void;
     clearCart(): void;
@@ -224,3 +226,105 @@ constructor(protected events: IEvents)
 - `setOrderField(field: keyof IOrder, value: IOrder[keyof IOrder]): void`- Устанавливает значение в переданное поле формы заказа, а также валидирует его.
 - `createOrder(items: string[], total: number): IOrder`- Создаёт заказ.
 - `get order(): Partial<IOrder>` - Получает данные из поля класса.
+
+## Классы представления
+
+### PageView
+
+Класс отвечает за отображение главной страницы сайта.
+
+Конструктор:
+```ts
+constructor(container: HTMLElement, protected events: EventEmitter)
+```
+
+Поля:
+- `main: HTMLElement` - Вся контентная часть сайта.
+- `products: HTMLElement` - Товар на главной странице.
+- `counter: HTMLElement` - Количество товаров в корзине.
+- `cart: HTMLElement` - Корзина на главной странице.
+
+Методы:
+- `set products(items: HTMLElement[])`- Вывод на страницу массива товаров.
+- `set counter(value: number)`- Устанавливает количество товаров в корзине.
+- `set modalOpen(value: boolean)`- Блокирует прокрутку окна с открытым модальным окном.
+
+### ProductView
+
+Класс отвечает за отображение товара на главной странице сайта.
+
+Конструктор:
+```ts
+constructor(container: HTMLElement, protected events: EventEmitter)
+```
+
+Поля:
+- `(id, title, description, image, price, category): HTMLElement`.
+
+Методы:
+- set и get методы, для сохранения и получения данных из полей класса.
+
+### CartView
+
+Класс корзины.
+
+Конструктор:
+```ts
+constructor(container: HTMLElement, protected events: EventEmitter)
+```
+
+Поля:
+- `items: HTMLElement` - Товары в корзине.
+- `totalPrice: HTMLElement` - Сумма корзины.
+
+Методы:
+- `set items(items: HTMLElement[])` - Выводит список товаров или показывает пустую квартиру.
+- `set totalPrice(totalPrice: number)` - Отображает стоимость корзины.
+
+### OrderView
+
+Класс формы выбора способа оплаты и адреса.
+
+Конструктор:
+```ts
+constructor(container: HTMLElement, protected events: EventEmitter)
+```
+
+Методы:
+- `clearPaymentType()` - Сбрасывает метод оплаты пользователя.
+- `set address(value: string)` - Меняет значение в поле класса.
+
+### SuccessView
+
+Класс отвечающий за показ окна об успешной покупке.
+
+Конструктор:
+```ts
+constructor(container: HTMLElement, protected events: EventEmitter)
+```
+
+Поля:
+- `totalPrice: HTMLElement` - Итоговая стоимость покупки.
+- `btnClose: HTMLElement` - Кнопка закрытия модального окна.
+
+Методы:
+- `set totalPrice(value: number)` - Меняет итоговую стоимость покупки.
+
+## Компоненты
+
+Весь код для взаимодействия компонентов между собой находится в файле index.ts - презентер
+
+Список всех событий:
+
+- `product:change` - Изменить данные товара.
+- `product:select` - Запись id товара для получения данных о товаре.
+- `product:add` - Добавление товара в корзину.
+- `preview:change` - Изменение отображения товара.
+- `modal:open` - Открыть модальное окно.
+- `modal:close` - Закрыть модальное окно.
+- `cart:open` - Открыть корзину.
+- `cart:change` - Изменить корзину.
+- `order:open` - Перейти к покупке.
+- `order:change` - .
+- `order:submitPayments` - Отправить форму оплаты и адреса.
+- `order:submitContacts` - Отправить форму почты и телефона.
