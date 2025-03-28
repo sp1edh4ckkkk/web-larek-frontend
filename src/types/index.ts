@@ -8,7 +8,7 @@ export interface IProduct {
 }
 
 export interface IProductData {
-    items: IProduct[];
+    products: IProduct[];
     preview: string | null;
     getProduct(productId: string): IProduct;
     setProducts(products: IProduct[]): void;
@@ -23,7 +23,7 @@ export interface ICart {
 }
 
 export interface ICartData {
-    items: IProduct[];
+    products: IProduct[];
     addProduct(product: IProduct): void;
     getTotalPrice(): number | null;
     deleteProduct(productId: string): void;
