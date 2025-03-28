@@ -27,7 +27,7 @@ export class ProductModel implements IProductData {
 
     setProducts(products: IProduct[]): void {
         this._products = products;
-        this.events.emit('product:change');
+        this.events.emit('products:change');
     }
 
     setPreview(product: IProduct): void {

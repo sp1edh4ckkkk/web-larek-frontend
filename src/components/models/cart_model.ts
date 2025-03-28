@@ -53,6 +53,16 @@ export class CartModel implements ICartData {
         this.total -= product.price;
     }
 
+    getButton(product: IProduct) {
+        if (product.price === null) {
+            return 'Товар нельзя купить';
+        }
+        const productInCart = this._products.some((item) => {
+            item.id === product.id;
+        });
+        return productInCart ? 'Убрать' : 'Купить';
+    }
+
     clearCart(): void {
         this._products = [];
         this._count = 0;

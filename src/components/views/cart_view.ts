@@ -11,7 +11,7 @@ export class CartView extends Component<ICartData> {
     protected container: HTMLElement;
     protected events: IEvents;
 
-    constructor(container: HTMLElement) {
+    constructor(container: HTMLElement, events: IEvents) {
         super(container);
 
         this._products = ensureElement<HTMLElement>('.basket__list');
@@ -34,7 +34,8 @@ export class CartView extends Component<ICartData> {
             this._products.replaceChildren(...products);
             this.setDisabled(this._btn, false);
         } else {
-            this._products.replaceChildren()
+            this._products.replaceChildren(createElement<HTMLParagraphElement>('p', { textContent: 'Корзина пуста' }));
+            this.setDisabled(this._btn, true);
         }
     }
 }

@@ -12,7 +12,7 @@ export class PageView extends Component<IPage> {
     protected container: HTMLElement;
     protected events: IEvents;
 
-    constructor(container: HTMLElement) {
+    constructor(container: HTMLElement, events: IEvents) {
         super(container);
 
         this._wrapper = ensureElement<HTMLElement>('.page__wrapper');

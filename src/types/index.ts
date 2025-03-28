@@ -5,6 +5,7 @@ export interface IProduct {
     image: string;
     price: number | null;
     category: string;
+    cartBtn: string | null;
 }
 
 export interface IProductData {
@@ -65,3 +66,4 @@ export interface IForm {
 
 export type TOrderDetail = Pick<IOrder, 'paymentType' | 'address'>;
 export type TOrderContacts = Pick<IOrder, 'email' | 'phone'>;
+export type TFormErrors = Partial<Record<keyof IOrder, string>>;
