@@ -15,33 +15,35 @@ export interface IProductData {
     setPreview(product: IProduct): void;
 }
 
-export interface ICart {
-    id: string;
-    title: string;
-    price: number | null;
-    count: number;
-}
-
 export interface ICartData {
     products: IProduct[];
+    count: number | null;
+    total: number | null;
     addProduct(product: IProduct): void;
-    getTotalPrice(): number | null;
-    deleteProduct(productId: string): void;
+    deleteProduct(product: IProduct): void;
     clearCart(): void;
 }
 
+export interface ICardActions {
+    onClick: (event: MouseEvent) => void;
+}
+
 export interface IOrder {
-    paymentType: string;
+    paymentType: TPaymentType;
     address: string;
     email: string;
     phone: string;
 }
 
 export interface IOrderData {
-    order: IOrder;
-    validatedOrder(): boolean;
-    setOrderField(field: keyof IOrder, value: IOrder[keyof IOrder]): void;
-    clearOrder(): void;
+    setOrderDetails(paymentType: TPaymentType, address: string): void;
+    setContactDetail(email: string, phone: string): void;
 }
 
-export type TFormErrors = Partial<Record<keyof IOrder, string>>;
+export interface IPage {
+    gallery: HTMLElement[];
+    counter: number;
+    locked: boolean;
+}
+
+export type TPaymentType = 'cash' | 'card';

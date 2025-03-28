@@ -1,34 +1,37 @@
-import { IProduct, IProductData } from '../../types/index.ts';
-import { IEvents } from '../base/events.ts';
+import { IProduct, IProductData } from '../../types';
+import { IEvents } from '../base/events';
+
 
 export class ProductModel implements IProductData {
-    protected products: IProduct[];
-    protected preview: string | null;
+    protected _products: IProduct[];
+    protected _preview: string | null;
     protected events: IEvents;
 
     constructor(events: IEvents) {
         this.events = events;
     }
 
+    get products(): IProduct[] {
+        return this._products;
+    }
+
+    get preview(): string | null {
+        return this._preview;
+    }
+
     getProduct(productId: string): IProduct {
-        return this.products.find((product) => product.id === productId);
+        return this._products.find((product) => {
+            product.id === productId
+        });
     }
 
     setProducts(products: IProduct[]): void {
-        this.products = products;
+        this._products = products;
         this.events.emit('product:change');
     }
 
     setPreview(product: IProduct): void {
-        this.preview = product.id;
+        this._preview = product.id;
         this.events.emit('preview:change', product);
-    }
-
-    get getProducts() {
-        return this.products;
-    }
-
-    get getPreview() {
-        return this.preview;
     }
 }

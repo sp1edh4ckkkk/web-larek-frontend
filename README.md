@@ -72,7 +72,7 @@ interface IProduct {
 
 ```ts
 interface IProductData {
-    items: IProduct[];
+    products: IProduct[];
     preview: string | null;
     getProduct(productId: string): IProduct;
     setProducts(products: IProduct[]): void;
@@ -95,7 +95,9 @@ interface ICart {
 
 ```ts
 interface ICartData {
-    items: IProduct[];
+    products: IProduct[];
+    count: number | null;
+    total: number | null;
     addProduct(product: IProduct): void;
     getTotalPrice(): number | null;
     deleteProduct(productId: string): void;
@@ -107,7 +109,7 @@ interface ICartData {
 
 ```ts
 interface IOrder {
-    paymentType: string;
+    paymentType: TPaymentType;
     address: string;
     email: string;
     phone: string;
@@ -117,11 +119,9 @@ interface IOrder {
 ### Оформление заказа
 
 ```ts
-interface IOrderData {
-    order: IOrder;
-    validatedOrder(): boolean;
-    setOrderField(field: keyof IOrder, value: IOrder[keyof IOrder]): void;
-    clearOrder(): void;
+export interface IOrderData {
+    setOrderDetails(paymentType: TPaymentType, address: string): void;
+    setContactDetail(email: string, phone: string): void;
 }
 ```
 
@@ -177,7 +177,7 @@ constructor(protected events: IEvents)
 ```
 
 Поля:
-- `items: IProduct[]` - Объекты товаров.
+- `products: IProduct[]` - Объекты товаров.
 - `preview: string | null` - id товара, выбранного для просмотра в модальном окне.
 - `events: IEvents` - Экземпляр класса EventEmitter.
 
@@ -198,7 +198,9 @@ constructor(events: IEvents)
 ```
 
 Поля:
-- `items: IProduct[]` - Объекты товаров в корзине.
+- `products: IProduct[]` - Объекты товаров в корзине.
+- `count: number` - Количество товаров в корзине.
+- `total: number` - Итоговая сумма товаров в корзине.
 - `events: IEvents` - Экземпляр класса EventEmitter.
 
 Методы:
