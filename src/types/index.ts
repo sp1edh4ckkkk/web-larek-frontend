@@ -29,14 +29,14 @@ export interface ICardActions {
 }
 
 export interface IOrder {
-    paymentType: TPaymentType;
+    paymentType: string;
     address: string;
     email: string;
     phone: string;
 }
 
 export interface IOrderData {
-    setOrderDetails(paymentType: TPaymentType, address: string): void;
+    setOrderDetails(paymentType: string, address: string): void;
     setContactDetail(email: string, phone: string): void;
 }
 
@@ -46,4 +46,22 @@ export interface IPage {
     locked: boolean;
 }
 
-export type TPaymentType = 'cash' | 'card';
+export interface ISuccess {
+    totalPrice: number;
+}
+
+export interface ISuccessActions {
+    onClick: () => void;
+}
+
+export interface IModal {
+    content: HTMLElement;
+}
+
+export interface IForm {
+    valid: boolean;
+    errors: string[];
+}
+
+export type TOrderDetail = Pick<IOrder, 'paymentType' | 'address'>;
+export type TOrderContacts = Pick<IOrder, 'email' | 'phone'>;

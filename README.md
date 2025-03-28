@@ -109,7 +109,7 @@ interface ICartData {
 
 ```ts
 interface IOrder {
-    paymentType: TPaymentType;
+    paymentType: string;
     address: string;
     email: string;
     phone: string;
@@ -120,7 +120,7 @@ interface IOrder {
 
 ```ts
 export interface IOrderData {
-    setOrderDetails(paymentType: TPaymentType, address: string): void;
+    setOrderDetails(paymentType: string, address: string): void;
     setContactDetail(email: string, phone: string): void;
 }
 ```
@@ -328,5 +328,5 @@ constructor(container: HTMLElement, protected events: EventEmitter)
 - `cart:change` - Изменить корзину.
 - `order:open` - Перейти к покупке.
 - `order:change` - Изменить данные в форме оформления товара.
-- `order:submitPayments` - Отправить форму оплаты и адреса.
-- `order:submitContacts` - Отправить форму почты и телефона.
+- `order:submit` - Отправить форму оплаты и адреса.
+- `contacts:submit` - Отправить форму почты и телефона.

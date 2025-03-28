@@ -8,8 +8,8 @@ export class CartView extends Component<ICartData> {
     protected _products: HTMLElement;
     protected _total: HTMLElement;
     protected _btn: HTMLElement;
-    protected events: IEvents;
     protected container: HTMLElement;
+    protected events: IEvents;
 
     constructor(container: HTMLElement) {
         super(container);
@@ -27,5 +27,14 @@ export class CartView extends Component<ICartData> {
 
     set total(value: number) {
         this.setText(this._total, `${value} синапсов`);
+    }
+
+    set products(products: HTMLElement[]) {
+        if (products.length) {
+            this._products.replaceChildren(...products);
+            this.setDisabled(this._btn, false);
+        } else {
+            this._products.replaceChildren()
+        }
     }
 }

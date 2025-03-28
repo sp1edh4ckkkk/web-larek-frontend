@@ -1,9 +1,9 @@
-import { IOrder, IOrderData, TPaymentType } from "../../types";
+import { IOrder, IOrderData } from "../../types";
 import { IEvents } from "../base/events";
 
 
 export class Order implements IOrderData {
-    protected _paymentType: TPaymentType;
+    protected _paymentType: string;
     protected _address: string;
     protected _email: string;
     protected _phone: string;
@@ -13,7 +13,7 @@ export class Order implements IOrderData {
         this.events = events;
     }
 
-    set paymentType(paymentType: TPaymentType) {
+    set paymentType(paymentType: string) {
         this._paymentType = paymentType;
     }
 
@@ -29,7 +29,7 @@ export class Order implements IOrderData {
         this._phone = phone;
     }
 
-    setOrderDetails(paymentType: TPaymentType, address: string): void {
+    setOrderDetails(paymentType: string, address: string): void {
         this._paymentType = paymentType;
         this._address = address;
     }
