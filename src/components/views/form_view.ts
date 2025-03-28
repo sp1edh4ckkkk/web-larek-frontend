@@ -2,6 +2,7 @@ import { Component } from "../base/components";
 import { IEvents } from "../base/events";
 import { IForm } from "../../types";
 
+
 export class FormView<T> extends Component<IForm> {
     protected _subBtn: HTMLButtonElement;
     protected _errors: HTMLElement;
@@ -20,7 +21,7 @@ export class FormView<T> extends Component<IForm> {
         });
         this.container.addEventListener('submit', (e) => {
             e.preventDefault();
-            this.events.emit(`${this.container.name}:submit`)
+            this.events.emit(`${this.container.name}:submit`);
         });
     }
 
@@ -33,6 +34,13 @@ export class FormView<T> extends Component<IForm> {
     }
 
     onInputChange(name: keyof T, value: string) {
-        this.events.emit(`order:${String(name)}:change`, { name, value })
+        this.events.emit(`order:${String(name)}:change`, { name, value });
+    }
+
+    render(state: Partial<T> & IForm) {
+        const { valid, errors, ...inputs } = state;
+        super.render({ valid, errors });
+        Object.assign(this, inputs);
+        return this.container;
     }
 }
