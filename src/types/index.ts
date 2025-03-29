@@ -17,11 +17,12 @@ export interface IProductData {
 }
 
 export interface ICartData {
-    products: IProduct[];
-    count: number | null;
-    total: number | null;
-    addProduct(product: IProduct): void;
-    deleteProduct(product: IProduct): void;
+    products: TCartItem[];
+    addProduct(product: TCartItem): void;
+    deleteProduct(product: TCartItem): void;
+    getTotalPrice(): number;
+    getCounter(): number;
+    getButton(product: TCartItem): string;
     clearCart(): void;
 }
 
@@ -30,6 +31,8 @@ export interface ICardActions {
 }
 
 export interface IOrder {
+    items: string[];
+    total: number;
     paymentType: string;
     address: string;
     email: string;
@@ -37,8 +40,11 @@ export interface IOrder {
 }
 
 export interface IOrderData {
-    setOrderDetails(paymentType: string, address: string): void;
-    setContactDetail(email: string, phone: string): void;
+    order: Partial<IOrder>;
+    setOrderField(field: keyof IOrder, value: IOrder[keyof IOrder]): void;
+    validateOrder(): boolean;
+    createOrder(items: string[], total: number): IOrder;
+    clearOrder(): void;
 }
 
 export interface IPage {
@@ -64,6 +70,13 @@ export interface IForm {
     errors: string[];
 }
 
+export interface IOrderResult {
+    id: string;
+    total: number;
+}
+
 export type TOrderDetail = Pick<IOrder, 'paymentType' | 'address'>;
 export type TOrderContacts = Pick<IOrder, 'email' | 'phone'>;
 export type TFormErrors = Partial<Record<keyof IOrder, string>>;
+export type TOrderForm = Pick<IOrder, 'paymentType' | 'address' | 'email' | 'phone'>
+export type TCartItem = Pick<IProduct, 'id' | 'title' | 'price'>;

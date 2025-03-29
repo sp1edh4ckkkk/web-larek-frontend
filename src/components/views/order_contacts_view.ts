@@ -4,9 +4,6 @@ import { FormView } from "./form_view";
 
 
 export class OrderContactsView extends FormView<TOrderContacts> {
-    protected container: HTMLFormElement;
-    protected events: IEvents;
-
     constructor(container: HTMLFormElement, events: IEvents) {
         super(container, events);
     }

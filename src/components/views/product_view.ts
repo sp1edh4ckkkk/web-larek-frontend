@@ -2,10 +2,13 @@ import { ICardActions, IProduct } from "../../types";
 import { CDN_URL } from "../../utils/constants";
 import { Component } from "../base/components";
 
-export const categories: Record<string, string> = {
-    'другое': 'card__category_other',
-    'софт-скил': 'card__category_soft'
-}
+export const categories = new Map([
+    ['софт-скил', 'card__category_soft'],
+    ['хард-скил', 'card__category_hard'],
+    ['кнопка', 'card__category_button'],
+    ['другое', 'card__category_other'],
+    ['дополнительное', 'card__category_additional'],
+]);
 
 
 export class ProductView extends Component<IProduct> {
@@ -19,7 +22,6 @@ export class ProductView extends Component<IProduct> {
     protected _productBtn: HTMLElement;
     protected _productDelBtn: HTMLElement;
     protected _cdn = CDN_URL;
-    protected container: HTMLElement
 
     constructor(container: HTMLElement, actions?: ICardActions) {
         super(container);
@@ -42,6 +44,14 @@ export class ProductView extends Component<IProduct> {
         }
     }
 
+    set id(value: string) {
+        this.container.dataset.id = value;
+    }
+
+    get id(): string {
+        return this.container.dataset.id || '';
+    }
+
     set title(value: string) {
         this.setText(this._title, value);
     }
@@ -56,7 +66,7 @@ export class ProductView extends Component<IProduct> {
 
     set price(value: number | null) {
         if (value == null) {
-            this.setText(this._price, '0');
+            this.setText(this._price, '0 синапсов');
             this.setText(this._productBtn, 'Товар закончился');
             this.setDisabled(this._productBtn, true);
         } else {
@@ -67,7 +77,7 @@ export class ProductView extends Component<IProduct> {
 
     set category(value: string) {
         this.setText(this._category, value);
-        this.toggleClass(this._category, categories[value], true)
+        this.toggleClass(this._category, categories.get(value), true)
     }
 
     set itemIndex(value: number) {

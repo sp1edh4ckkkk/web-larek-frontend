@@ -1,68 +1,72 @@
-import { IOrder, IOrderData, TFormErrors } from "../../types";
+import { IOrder, IOrderData, TFormErrors, TOrderForm } from "../../types";
 import { IEvents } from "../base/events";
 
 
 export class OrderModel implements IOrderData {
-    protected _paymentType: string;
-    protected _address: string;
-    protected _email: string;
-    protected _phone: string;
-    protected _errors: TFormErrors;
-    protected events: IEvents;
+    protected _order: Partial<IOrder> = {
+        paymentType: '',
+        address: '',
+        email: '',
+        phone: ''
+    }
+    protected _formErrors: TFormErrors;
 
-    constructor(events: IEvents) {
+    constructor(protected events: IEvents) {
         this.events = events;
     }
 
-    set paymentType(paymentType: string) {
-        this._paymentType = paymentType;
+    get order(): Partial<IOrder> {
+        return this._order;
     }
 
-    set address(address: string) {
-        this._address = address;
-    }
-
-    set email(email: string) {
-        this._email = email;
-    }
-
-    set phone(phone: string) {
-        this._phone = phone;
-    }
-
-    setOrderDetails(paymentType: string, address: string): void {
-        this._paymentType = paymentType;
-        this._address = address;
-    }
-
-    setContactDetail(email: string, phone: string): void {
-        this._email = email;
-        this._phone = phone;
+    setOrderField(field: keyof TOrderForm, value: string) {
+        this._order[field] = value;
+        this.validateOrder();
     }
 
     validateOrder() {
-        const errors: typeof this._errors = {};
+        const errors: typeof this._formErrors = {};
 
-        if (!this._paymentType) {
+        if (!this._order.paymentType) {
             errors.paymentType = "Вы не выбрали способ оплаты.";
         }
-        if (!this._address) {
+        if (!this._order.address) {
             errors.address = "Вы не указали адрес доставки.";
         }
-        if (!this._email) {
+        if (!this._order.email) {
             errors.email = "Вы не указали почту.";
         }
-        if (!this._phone) {
+        if (!this._order.phone) {
             errors.phone = "Вы не указали телефон.";
         }
 
-        this._errors = errors;
-        this.events.emit('errors:change', this._errors);
+        console.log(11);
+        this._formErrors = errors;
+        console.log(this._formErrors);
+        console.log(12);
+        this.events.emit('errors:change', this._formErrors);
 
+        console.log(13);
         return Object.keys(errors).length === 0;
     }
 
-    getUserData(): IOrder {
-        return { paymentType: this._paymentType, address: this._address, email: this._email, phone: this._phone }
+    createOrder(items: string[], total: number): IOrder {
+        return {
+            items,
+            total,
+            paymentType: this._order.paymentType,
+            address: this._order.address,
+            email: this._order.email,
+            phone: this._order.phone
+        }
+    }
+
+    clearOrder() {
+        this._order = {
+            paymentType: '',
+            address: '',
+            email: '',
+            phone: ''
+        }
     }
 }

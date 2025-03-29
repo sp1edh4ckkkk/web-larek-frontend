@@ -9,16 +9,15 @@ export class PageView extends Component<IPage> {
     protected _gallery: HTMLElement;
     protected _cart: HTMLElement;
     protected _counter: HTMLElement;
-    protected container: HTMLElement;
-    protected events: IEvents;
 
-    constructor(container: HTMLElement, events: IEvents) {
+    constructor(container: HTMLElement, protected events: IEvents) {
         super(container);
 
         this._wrapper = ensureElement<HTMLElement>('.page__wrapper');
         this._gallery = ensureElement<HTMLElement>('.gallery');
         this._cart = ensureElement<HTMLElement>('.header__basket');
         this._counter = ensureElement<HTMLElement>('.header__basket-counter');
+
         this._cart.addEventListener('click', () => {
             this.events.emit('cart:open')
         });
@@ -29,10 +28,14 @@ export class PageView extends Component<IPage> {
     }
 
     set counter(value: number) {
-        this.setText(this._counter, value);
+        this.setText(this._counter, String(value));
     }
 
     set locked(value: boolean) {
-        this.toggleClass(this._wrapper, 'page__wrapper_locked', value);
+        if (value) {
+            this._wrapper.classList.add('page__wrapper_locked');
+        } else {
+            this._wrapper.classList.remove('page__wrapper_locked');
+        }
     }
 }

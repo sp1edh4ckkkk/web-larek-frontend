@@ -6,26 +6,26 @@ import { IForm } from "../../types";
 export class FormView<T> extends Component<IForm> {
     protected _subBtn: HTMLButtonElement;
     protected _errors: HTMLElement;
-    protected container: HTMLFormElement;
-    protected events: IEvents;
 
-    constructor(container: HTMLFormElement, events: IEvents) {
+    constructor(protected container: HTMLFormElement, protected events: IEvents) {
         super(container);
 
-        this._subBtn = this.container.querySelector('button[type="submit"]');
+        this._subBtn = this.container.querySelector('button[type=submit]');
         this._errors = this.container.querySelector('.form__errors');
 
-        this.container.addEventListener('input', (e) => {
+        this.container.addEventListener('input', (e: Event) => {
             const target = e.target as HTMLInputElement;
-            this.onInputChange(target.name as keyof T, target.value);
+            const field = target.name as keyof T;
+            const value = target.value;
+            this.onInputChange(field, value);
         });
-        this.container.addEventListener('submit', (e) => {
+        this.container.addEventListener('submit', (e: Event) => {
             e.preventDefault();
             this.events.emit(`${this.container.name}:submit`);
         });
     }
 
-    set validSubBtn(value: boolean) {
+    set valid(value: boolean) {
         this._subBtn.disabled = !value;
     }
 
@@ -33,8 +33,8 @@ export class FormView<T> extends Component<IForm> {
         this.setText(this._errors, value);
     }
 
-    onInputChange(name: keyof T, value: string) {
-        this.events.emit(`order:${String(name)}:change`, { name, value });
+    protected onInputChange(field: keyof T, value: string) {
+        this.events.emit(`order.${String(field)}:change`, { field, value });
     }
 
     render(state: Partial<T> & IForm) {

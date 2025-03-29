@@ -1,32 +1,33 @@
-import { ensureElement, createElement } from "../../utils/utils";
+import { ensureElement, createElement, formatNumber } from "../../utils/utils";
 import { Component } from "../base/components";
 import { IEvents } from "../base/events";
-import { ICartData } from "../../types";
+import { TCartItem } from "../../types";
 
 
-export class CartView extends Component<ICartData> {
+export class CartView extends Component<TCartItem> {
     protected _products: HTMLElement;
-    protected _total: HTMLElement;
+    protected _totalPrice: HTMLElement;
     protected _btn: HTMLElement;
-    protected container: HTMLElement;
     protected events: IEvents;
 
     constructor(container: HTMLElement, events: IEvents) {
         super(container);
 
-        this._products = ensureElement<HTMLElement>('.basket__list');
-        this._total = ensureElement<HTMLElement>('.basket__price');
-        this._btn = ensureElement<HTMLElement>('.button');
+        this._products = ensureElement<HTMLElement>('.basket__list', this.container);
+        this._totalPrice = this.container.querySelector('.basket__price');
+        this._btn = this.container.querySelector('.button');
 
         if (this._btn) {
             this._btn.addEventListener('click', () => {
-                this.events.emit('order:open')
+                events.emit('order:open')
             });
         }
+
+        this.products = [];
     }
 
-    set total(value: number) {
-        this.setText(this._total, `${value} синапсов`);
+    set totalPrice(value: number) {
+        this.setText(this._totalPrice, `${formatNumber(value)} синапсов`);
     }
 
     set products(products: HTMLElement[]) {

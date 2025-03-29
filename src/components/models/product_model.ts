@@ -11,26 +11,24 @@ export class ProductModel implements IProductData {
         this.events = events;
     }
 
-    get products(): IProduct[] {
+    get products() {
         return this._products;
     }
 
-    get preview(): string | null {
+    get preview() {
         return this._preview;
     }
 
-    getProduct(productId: string): IProduct {
-        return this._products.find((product) => {
-            product.id === productId
-        });
+    getProduct(productId: string) {
+        return this._products.find((item) => item.id === productId);
     }
 
-    setProducts(products: IProduct[]): void {
+    setProducts(products: IProduct[]) {
         this._products = products;
         this.events.emit('products:change');
     }
 
-    setPreview(product: IProduct): void {
+    setPreview(product: IProduct) {
         this._preview = product.id;
         this.events.emit('preview:change', product);
     }

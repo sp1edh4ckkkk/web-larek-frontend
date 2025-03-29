@@ -5,7 +5,6 @@ import { ISuccess, ISuccessActions } from "../../types";
 export class SuccessView extends Component<ISuccess> {
     protected _totalPrice: HTMLElement;
     protected _closeBtn: HTMLButtonElement;
-    protected container: HTMLElement;
 
     constructor(container: HTMLElement, actions?: ISuccessActions) {
         super(container);
