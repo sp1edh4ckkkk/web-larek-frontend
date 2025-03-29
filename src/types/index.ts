@@ -33,7 +33,7 @@ export interface ICardActions {
 export interface IOrder {
     items: string[];
     total: number;
-    paymentType: string;
+    payment: string;
     address: string;
     email: string;
     phone: string;
@@ -75,8 +75,8 @@ export interface IOrderResult {
     total: number;
 }
 
-export type TOrderDetail = Pick<IOrder, 'paymentType' | 'address'>;
+export type TOrderDetail = Pick<IOrder, 'payment' | 'address'>;
 export type TOrderContacts = Pick<IOrder, 'email' | 'phone'>;
 export type TFormErrors = Partial<Record<keyof IOrder, string>>;
-export type TOrderForm = Pick<IOrder, 'paymentType' | 'address' | 'email' | 'phone'>
+export type TOrderForm = Pick<IOrder, 'payment' | 'address' | 'email' | 'phone'>
 export type TCartItem = Pick<IProduct, 'id' | 'title' | 'price'>;

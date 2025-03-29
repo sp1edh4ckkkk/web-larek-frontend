@@ -19,7 +19,7 @@ export class OrderDetailView extends FormView<TOrderDetail> {
             this._paymentCardBtn.addEventListener('click', () => {
                 this._paymentCardBtn.classList.add('button_alt-active');
                 this._paymentCashBtn.classList.remove('button_alt-active');
-                this.onInputChange('paymentType', 'card');
+                this.onInputChange('payment', 'card');
             });
         }
 
@@ -27,7 +27,7 @@ export class OrderDetailView extends FormView<TOrderDetail> {
             this._paymentCashBtn.addEventListener('click', () => {
                 this._paymentCashBtn.classList.add('button_alt-active');
                 this._paymentCardBtn.classList.remove('button_alt-active');
-                this.onInputChange('paymentType', 'cash');
+                this.onInputChange('payment', 'cash');
             });
         }
     }

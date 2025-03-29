@@ -103,10 +103,10 @@ events.on('cart:change', () => {
 });
 
 events.on('formErrors:change', (errors: Partial<TOrderForm>) => {
-    const { paymentType, address, email, phone } = errors;
-    orderDetailView.valid = !paymentType && !address;
+    const { payment, address, email, phone } = errors;
+    orderDetailView.valid = !payment && !address;
     orderDetailView.errors = Object.values({
-        paymentType,
+        payment,
         address
     }).filter(i => !!i).join('; ');
     orderContactsView.valid = !email && !phone;
@@ -127,9 +127,9 @@ events.on('modal:close', () => {
 events.on('order:open', () => {
     modalView.render({
         content: orderDetailView.render({
-            paymentType: orderModel.order.paymentType,
+            payment: orderModel.order.payment,
             address: orderModel.order.address,
-            valid: orderModel.order.paymentType && orderModel.order.address ? true : false,
+            valid: orderModel.order.payment && orderModel.order.address ? true : false,
             errors: []
         })
     });
