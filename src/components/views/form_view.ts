@@ -26,7 +26,7 @@ export class FormView<T> extends Component<IForm> {
     }
 
     set valid(value: boolean) {
-        this._subBtn.disabled = !value;
+        this.setDisabled(this._subBtn, !value);
     }
 
     set errors(value: string) {

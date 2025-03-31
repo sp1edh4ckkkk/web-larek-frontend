@@ -17,16 +17,16 @@ export class OrderDetailView extends FormView<TOrderDetail> {
 
         if (this._paymentCardBtn) {
             this._paymentCardBtn.addEventListener('click', () => {
-                this._paymentCardBtn.classList.add('button_alt-active');
-                this._paymentCashBtn.classList.remove('button_alt-active');
+                this.toggleClass(this._paymentCardBtn, 'button_alt-active', true);
+                this.toggleClass(this._paymentCashBtn, 'button_alt-active', false);
                 this.onInputChange('payment', 'card');
             });
         }
 
         if (this._paymentCashBtn) {
             this._paymentCashBtn.addEventListener('click', () => {
-                this._paymentCashBtn.classList.add('button_alt-active');
-                this._paymentCardBtn.classList.remove('button_alt-active');
+                this.toggleClass(this._paymentCashBtn, 'button_alt-active', true);
+                this.toggleClass(this._paymentCardBtn, 'button_alt-active', false);
                 this.onInputChange('payment', 'cash');
             });
         }
@@ -37,7 +37,7 @@ export class OrderDetailView extends FormView<TOrderDetail> {
     }
 
     resetPaymentData() {
-        this._paymentCardBtn.classList.remove('button_alt-active');
-        this._paymentCardBtn.classList.remove('button_alt-active');
+        this.toggleClass(this._paymentCardBtn, 'button_alt-active', false);
+        this.toggleClass(this._paymentCashBtn, 'button_alt-active', false);
     }
 }
